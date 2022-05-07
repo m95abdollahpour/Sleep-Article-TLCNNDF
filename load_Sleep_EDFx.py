@@ -1,6 +1,6 @@
 import pyedflib
 import numpy as np
-import github_functions
+import Functions
 from scipy import stats
 
 
@@ -96,9 +96,6 @@ del data
 h10 = edfxRead(directory+"\\SC4211EC-Hypnogram.edf")
 
 
-
-
-
 data = pyedflib.EdfReader(directory+"\\ST7022J0-PSG.edf")
 eeg11=np.float32(data.readSignal(1))
 eog11=np.float32(data.readSignal(2))
@@ -168,8 +165,6 @@ eog15[eog15 > 600] = 600
 eog15 = eog15 - np.mean(eog15)
 
 
-
-
 data = pyedflib.EdfReader(directory+"\\ST7111J0-PSG.edf")
 eeg16=np.float32(data.readSignal(1))
 eog16=np.float32(data.readSignal(2))
@@ -183,8 +178,6 @@ eog16[eog16 > 600] = 600
 eog16 = eog16 - np.mean(eog16)
 
 
-
-
 data = pyedflib.EdfReader(  directory+"\\ST7072J0-PSG.edf")
 eeg17=np.float32(data.readSignal(1))
 eog17=np.float32(data.readSignal(2))
@@ -196,8 +189,6 @@ eeg17 = eeg17 - np.mean(eeg17)
 eog17[eog17 < -600] = -600
 eog17[eog17 > 600] = 600
 eog17 = eog17 - np.mean(eog17)
-
-
 
 
 data = pyedflib.EdfReader(  directory+"\\ST7151J0-PSG.edf")
@@ -214,10 +205,6 @@ eog18 = eog18 - np.mean(eog18)
 
 
 
-
-
-
-
 data = pyedflib.EdfReader(  directory+"\\ST7191J0-PSG.edf")
 eeg19=np.float32(data.readSignal(1))
 eog19=np.float32(data.readSignal(2))
@@ -231,7 +218,6 @@ eog19[eog19 > 600] = 600
 eog19 = eog19 - np.mean(eog19)
 
 
-
 data = pyedflib.EdfReader(  directory+"\\ST7201J0-PSG.edf")
 eeg20=np.float32(data.readSignal(1))
 eog20=np.float32(data.readSignal(2))
@@ -243,7 +229,6 @@ eeg20 = eeg20 - np.mean(eeg20)
 eog20[eog20 < -600] = -600
 eog20[eog20 > 600] = 600
 eog20 = eog20 - np.mean(eog20)
-
 
 
 
@@ -270,15 +255,11 @@ for i in range(20):
     print (i)
     
     
-
-
 keys = list(fv_eeg)
 h_keys = list(hypnograms)
 
 for i in range(20):
     fv_eeg[keys[i]] = fv_eeg[keys[i]][:,:len(hypnograms[h_keys[i]])]
-
-
 
 
 
@@ -294,9 +275,6 @@ h=np.concatenate((h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,h18
 h[h == 5] = 4
 POS = np.where(h > 5)
 fv1 = np.delete(fv1,POS,1)
-
-
-
 
 
 
@@ -321,21 +299,13 @@ for i in range(20):
 
 
 
-
-
-
-
 fv2 = np.concatenate((fv_eeg[keys[0]],fv_eeg[keys[1]],fv_eeg[keys[2]],fv_eeg[keys[3]],fv_eeg[keys[4]],
                          fv_eeg[keys[5]],fv_eeg[keys[6]],fv_eeg[keys[7]],fv_eeg[keys[8]],
                          fv_eeg[keys[9]],fv_eeg[keys[10]],fv_eeg[keys[11]],fv_eeg[keys[12]],
                          fv_eeg[keys[13]],fv_eeg[keys[14]],fv_eeg[keys[15]],fv_eeg[keys[16]],
                          fv_eeg[keys[17]],fv_eeg[keys[18]],fv_eeg[keys[19]]), axis = 1)
 
-
-
 fv2 = np.delete(fv2,POS,1)
-
-
 
 
 
@@ -349,15 +319,11 @@ for i in range(20):
 
 
 
-
-
 keys = list(fv_eog)
 h_keys = list(hypnograms)
 
 for i in range(20):
     fv_eog[keys[i]] = fv_eog[keys[i]][:,:len(hypnograms[h_keys[i]])]
-
-
 
 
 
@@ -381,14 +347,11 @@ for i in range(20):
     print (i)
 
 
-
 keys = list(fv_eog)
 h_keys = list(hypnograms)
 
 for i in range(20):
     fv_eog[keys[i]] = fv_eog[keys[i]][:,:len(hypnograms[h_keys[i]])]
-
-
 
 
 fvo = np.concatenate((fv_eog[keys[0]],fv_eog[keys[1]],fv_eog[keys[2]],fv_eog[keys[3]],fv_eog[keys[4]],
@@ -398,20 +361,14 @@ fvo = np.concatenate((fv_eog[keys[0]],fv_eog[keys[1]],fv_eog[keys[2]],fv_eog[key
                          fv_eog[keys[17]],fv_eog[keys[18]],fv_eog[keys[19]]), axis = 1)
 
 
-
 fvo = np.delete(fvo,POS,1)
 h = np.delete(h,POS,0)
-
 
 
 fv2 = np.concatenate((fvo2,fv2), axis = 0)
 
 
-
-
-
 # removing outlier epochs using z-score
-
 fv11=normal(fv1)
 fvoo = normal(fvo)
 fv22 = normal(fv2)
@@ -538,13 +495,5 @@ fv11 = normal(fv11)
 fv22 = normal(fv22)
 
 fv22=np.concatenate((fvoo,fv22),axis = 0)
-
-
-
-
-
-
-
-
 
 
